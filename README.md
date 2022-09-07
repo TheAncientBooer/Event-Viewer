@@ -13,11 +13,11 @@ The webpage will show a zoom-able map with pins that represent event locations. 
 ## Data Model
 
 #### Event
-  - event_name
+  - title
   - description
   - location
-  - date_time_start
-  - date_time_end
+  - start_date
+  - end_date
   - event_votes
   - posted_by
 
