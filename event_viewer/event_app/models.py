@@ -1,6 +1,6 @@
 from django.db import models
 
-class User (models.Model):
+class User(models.Model):
     first_name = models.CharField(max_length=255)
     last_name = models.CharField(max_length=255)
     user_name = models.CharField(max_length=255)
@@ -8,6 +8,14 @@ class User (models.Model):
     password = models.CharField(max_length=255)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    
+    def total_votes(self):
+        self.events.all
+        events = self.events.all()
+        total = 0
+        for event in events:
+            total += event.event_votes
+        return total
 
 class Event(models.Model):
     title = models.CharField(max_length=255)
@@ -18,8 +26,4 @@ class Event(models.Model):
     event_votes = models.IntegerField(default=0)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    posted_by = models.ForeignKey(User.user_name, on_delete=models.CASCADE, related_name="events")
-
-
-
-
+    posted_by = models.ForeignKey(User, on_delete=models.CASCADE, related_name="events")
