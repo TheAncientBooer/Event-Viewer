@@ -9,7 +9,7 @@ class User(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     
-    def total_votes(self):
+    def total_votes(self):  # total votes for a user for all events posted user.total_votes()
         self.events.all
         events = self.events.all()
         total = 0
