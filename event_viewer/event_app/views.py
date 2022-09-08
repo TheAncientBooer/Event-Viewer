@@ -5,4 +5,4 @@ from django.http import HttpResponse, HttpResponseRedirect
 
 
 def index(request):
-    return render(request, 'event_app/index.html')
+    return render(request, 'index.html')
