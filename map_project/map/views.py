@@ -26,7 +26,7 @@ def index(request):
         return HttpResponse('You address input is invalid')
 
     # Create Map Object
-    m = folium.Map(location=[19, -12], zoom_start=2)
+    m = folium.Map(location=[45.52592691269178, -122.65383574156633], zoom_start=2)
 
     folium.Marker([lat, lng], tooltip='Click for more',
                   popup=country).add_to(m)
