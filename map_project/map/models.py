@@ -1,8 +1,4 @@
-import json
 from django.db import models
-
-# Create your models here.
-
 
 class Search(models.Model):
     address = models.CharField(max_length=200, null=True)
