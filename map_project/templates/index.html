@@ -1,3 +1,4 @@
+{% comment %} index = /home {% endcomment %}
 {% load crispy_forms_tags %} 
 <!doctype html>
 <html lang="en">
@@ -28,9 +29,19 @@
                 <li class="nav-item active">
                     <a class="nav-link" href="{% url 'index' %}">Refresh<span class="sr-only">(current)</span></a>
                 </li>
-                <li class="nav-item active">
-                    <a class="nav-link" href="#">Login</a>
+
+                <li class="login/out">  
+                {% comment %} {% block content %} {% endcomment %}
+                {% if user.is_authenticated %}
+                Logged in as {{ user.username }}!
+                <p><a href="{% url 'logout' %}">Log Out</a></p>
+                {% else %}
+                {% comment %} <p>You are not logged in</p> {% endcomment %}
+                <a href="{% url 'login' %}">Log In</a>
+                {% endif %}
+                {% comment %} {% endblock %} {% endcomment %}
                 </li>
+
             </ul>
             <form class="form-inline my-2 my-lg-0" method="POST">
                 {% csrf_token %}
