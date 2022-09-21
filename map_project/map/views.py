@@ -9,7 +9,7 @@ import geocoder
 # Create your views here.
 
 
-def index(request): 
+def index(request):
     if request.method == 'POST':
         form = SearchForm(request.POST)
         if form.is_valid():
