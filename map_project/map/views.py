@@ -35,8 +35,8 @@ def index(request):
     folium.Marker([45.3311, -121.7113], popup="<i>Timberline Lodge</i>", tooltip=tooltip).add_to(m)
     folium.Marker([33.41063301181929, -82.13471009798371], popup="<i>Annex</i>", tooltip=tooltip).add_to(m)
 
-    #display map
-    m.save('map.html')
+    # display map
+    # m.save('map.html')
     # m.save("index.html")
 
 
