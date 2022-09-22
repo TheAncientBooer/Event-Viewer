@@ -1,13 +1,11 @@
 from pyexpat import model
 from turtle import title
 from django.shortcuts import render, redirect
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from .models import Search
-from .forms import SearchForm
+from .forms import SearchForm, EventForm
 import folium
 import geocoder
-
-# Create your views here.
 
 
 def index(request):
@@ -15,7 +13,7 @@ def index(request):
         form = SearchForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('/')
+            return redirect('/')        ####################Original code
     else:
         form = SearchForm()
     address = Search.objects.all().last()
@@ -26,6 +24,9 @@ def index(request):
     if lat == None or lng == None:
         address.delete()
         return HttpResponse('Please enter a valid address. Refresh the page to try again.')
+
+
+    
     
     # Create Map Object
     
@@ -40,22 +41,35 @@ def index(request):
     # display map
     # m.save('map.html')
     # m.save("index.html")
-
-
-    # m = folium.Map(location=[45.52592691269178, -122.65383574156633], zoom_start=1.5)
-
+    # m = folium.Map(location=[45.52592691269178, -122.65383574156633], zoom_start=1.5
     folium.Marker([lat, lng], tooltip='Click for more',
                    popup=country).add_to(m)
     # Get HTML Representation of Map Object
-    
-    
     m = m._repr_html_()
     context = {
         'm': m,
         'form': form,
-        'address': address,
+        #'address': address,
         
     }
     
     return render(request, 'index.html', context)
+
+def get_event(request):
+    # if this is a POST request we need to process the form data
+    if request.method == 'POST':
+        # create a form instance and populate it with data from the request:
+        form = EventForm(request.POST)
+        # check whether it's valid:
+        if form.is_valid():
+            # process the data in form.cleaned_data as required
+            # ...
+            # redirect to a new URL:
+            return HttpResponseRedirect('/thanks/')
+
+    # if a GET (or any other method) we'll create a blank form
+    else:
+        form = EventForm()
+
+    return render(request, 'post_event.html', {'form': form})
     

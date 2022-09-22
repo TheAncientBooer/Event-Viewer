@@ -1,13 +1,43 @@
 <!-- templates/post_event.html -->
+<!--Form for posting event-->
 {% extends "base.html" %}
-
-{% block title %}Post Event{% endblock %}
-
 {% block content %}
-  <h2>Post</h2>
-  <form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Post</button>
-  </form>
-{% endblock %} 
+
+<form action="/post_event/" method="post">
+  {% csrf_token %}
+  {{ form }}
+  <label for="title">Title: </label>
+  <input id="title" type="text" name="title" value="{{ current_title }}">
+  <input type="submit" value="OK">
+</form>
+
+
+{% endblock %}
+
+
+
+
+
+
+
+
+
+
+{% comment %} {% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h1>{{ event.title }}</h1>
+                <p>{{ event.description }}</p>
+                <p>{{ event.date }}</p>
+                <p>{{ event.location }}</p>
+                <p>{{ event.organizer }}</p>
+                <p>{{ event.contact }}</p>
+                <p>{{ event.email }}</p>
+                <p>{{ event.phone }}</p>
+                <p>{{ event.website }}</p>
+                <p>{{ event.image }}</p>
+            </div>
+        </div>
+    </div>
+{% endblock %} {% endcomment %}
