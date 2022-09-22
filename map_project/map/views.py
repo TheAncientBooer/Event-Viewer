@@ -1,4 +1,5 @@
 from pyexpat import model
+from turtle import title
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from .models import Search
@@ -24,14 +25,15 @@ def index(request):
     country = location.country
     if lat == None or lng == None:
         address.delete()
-        return HttpResponse('You address input is invalid')
+        return HttpResponse('Please enter a valid address. Refresh the page to try again.')
     
     # Create Map Object
-    m = folium.Map(location=[45.52592691269178, -122.65383574156633], zoom_start=2,)
+    
+    m = folium.Map(location=[lat, lng], zoom_start=1.5) #works
 
     tooltip = "View Event!"
 
-    folium.Marker([45.3288, -121.6625], popup="<i>Mt. Hood Meadows</i>", tooltip=tooltip).add_to(m) #change tooltip to event title
+    folium.Marker([45.3288, -121.6625], popup= title, tooltip=tooltip).add_to(m) #change tooltip to event title
     folium.Marker([45.3311, -121.7113], popup="<i>Timberline Lodge</i>", tooltip=tooltip).add_to(m)
     folium.Marker([33.41063301181929, -82.13471009798371], popup="<i>Annex</i>", tooltip=tooltip).add_to(m)
 
@@ -51,6 +53,8 @@ def index(request):
     context = {
         'm': m,
         'form': form,
+        'address': address,
+        
     }
     
     return render(request, 'index.html', context)
