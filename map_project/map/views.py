@@ -2,7 +2,7 @@ from pyexpat import model
 from turtle import title
 from django.shortcuts import render, redirect
 from django.http import HttpResponse, HttpResponseRedirect
-from .models import Search
+from .models import Search, Event
 from .forms import SearchForm, EventForm
 import folium
 import geocoder
@@ -59,7 +59,10 @@ def post_event(request):
     if request.method == 'POST':
         form = EventForm(request.POST)
         if form.is_valid():
-            form.save()
+            posted_event = Event()
+            posted_event.text = form.cleaned_data['title']
+            posted_event.save()
+            
     #         return redirect('/')
     form = EventForm()
     context = {'form': form,
