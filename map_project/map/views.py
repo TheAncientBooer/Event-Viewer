@@ -25,47 +25,32 @@ def index(request):
         address.delete()
         return HttpResponse('Please enter a valid address. Refresh the page to try again.')
 
-
-    
-    
     # Create Map Object
-    
     m = folium.Map(location=[lat, lng], zoom_start=1.5) #works
-
     tooltip = "View Event!"
 
     folium.Marker([45.3288, -121.6625], popup= title, tooltip=tooltip).add_to(m) #change tooltip to event title
     folium.Marker([45.3311, -121.7113], popup="<i>Timberline Lodge</i>", tooltip=tooltip).add_to(m)
     folium.Marker([33.41063301181929, -82.13471009798371], popup="<i>Annex</i>", tooltip=tooltip).add_to(m)
 
-    # display map
-    # m.save('map.html')
-    # m.save("index.html")
-    # m = folium.Map(location=[45.52592691269178, -122.65383574156633], zoom_start=1.5
-    folium.Marker([lat, lng], tooltip='Click for more',
-                   popup=country).add_to(m)
+    folium.Marker([lat, lng], tooltip='Click for more', popup=country).add_to(m)
     # Get HTML Representation of Map Object
     m = m._repr_html_()
     context = {
         'm': m,
         'form': form,
         #'address': address,
-        
     }
     
     return render(request, 'index.html', context)
-
+            
 def post_event(request):
     if request.method == 'POST':
         form = EventForm(request.POST)
         if form.is_valid():
-            posted_event = Event()
-            posted_event.text = form.cleaned_data['title']
-            posted_event.save()
-            
+            form.save()
+            return redirect('/')  
     #         return redirect('/')
     form = EventForm()
-    context = {'form': form,
-                'hello': 'hello'
-    }
+    context = {'form': form,}
     return render(request, 'post_event.html', context) #may have to specify the template name

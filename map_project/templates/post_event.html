@@ -1,5 +1,5 @@
-<form action="save" method="post">
+<form action="{% url 'post_event' %}" method="post">
     {% csrf_token %}
     {{form}}
-    <input type="submit" value="Post Event">
-</form>
+    <input type="submit" value="Submit">
+</form> 
