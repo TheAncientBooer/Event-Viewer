@@ -40,7 +40,7 @@ def index(request):
         'm': m,
         'form': form,
         #'address': address,
-    }
+    } 
     
     return render(request, 'index.html', context)
             
