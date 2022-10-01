@@ -1,3 +1,4 @@
+from cgitb import text
 from django.db import models 
 
 class Search(models.Model):
@@ -8,10 +9,10 @@ class Search(models.Model):
         return self.address
 class Event(models.Model):
      title = models.CharField(max_length=200, null=True)
-     description = models.TextField(null=True)
+     description = models.TextField(max_length=3000, null=True)
      event_location = models.CharField(max_length=500, null=True)
-     start_date = models.DateField()
-     end_date = models.DateField()
+     start_date = models.DateField(max_length=8, null=True)
+     end_date = models.DateField(max_length=8, null=True)
     
      def __str__(self):
             return self.title  
