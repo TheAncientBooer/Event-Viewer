@@ -7,7 +7,8 @@ class SearchForm(forms.ModelForm):
         model = Search
         fields = ['address']
 
-class EventForm(ModelForm): #WAS    forms.ModelForm):
+class EventForm(forms.ModelForm):
+    address = forms.CharField(label='')
     class Meta:
         model = Event
         fields = '__all__'
