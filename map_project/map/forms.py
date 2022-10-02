@@ -7,14 +7,8 @@ class SearchForm(forms.ModelForm):
         model = Search
         fields = ['address']
 
-class EventForm(ModelForm): #WAS    forms.ModelForm):
+class EventForm(forms.ModelForm):
+    address = forms.CharField(label='')
     class Meta:
         model = Event
         fields = '__all__'
-# form = EventForm()    
-# event = Event.objects.get(pk=1)
-# form = EventForm(instance=event)
-
-    # class Meta:
-    #     model = Event
-    #     fields = ['title', 'description', 'location', 'start_date', 'end_date', 'website', ]
