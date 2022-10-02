@@ -1,4 +1,7 @@
+from asyncio import events
+from multiprocessing import context
 from pyexpat import model
+from tkinter.tix import Form
 from turtle import title
 from django.shortcuts import render, redirect
 from django.http import HttpResponse, HttpResponseRedirect
@@ -7,7 +10,39 @@ from .forms import SearchForm, EventForm
 import folium
 import geocoder
 
+# def index(request):
+    
+#     if request.method == 'POST':
+#         event_location = Event.objects.all().last()
+#         location = geocoder.osm(event_location)
+#         lat = location.lat
+#         lng = location.lng
+#         country = location.country
+#     if lat == None or lng == None:
+#         event_location.delete()
+#         return HttpResponse('Please enter a valid address. Refresh the page to try again.')
 
+#     # Create Map Object
+#     m = folium.Map(location=[lat, lng], zoom_start=1.5) #works
+    
+#     m.save("index.html")
+
+
+#     # folium.Marker([45.3288, -121.6625], popup= title, tooltip=tooltip).add_to(m) #change tooltip to event title
+#     # folium.Marker([45.3311, -121.7113], popup="<i>Timberline Lodge</i>", tooltip=tooltip).add_to(m)
+#     # folium.Marker([33.41063301181929, -82.13471009798371], popup="<i>Annex</i>", tooltip=tooltip).add_to(m)
+
+#     folium.Marker([lat, lng], tooltip='View Event', popup=country).add_to(m)
+#     # Get HTML Representation of Map Object
+#     m = m._repr_html_()
+#     context = {
+#         'm': m,
+#         'form': form,
+#         #'address': address,
+#     }
+    
+#     return render(request, 'index.html', context)
+    
 def index(request):
     if request.method == 'POST':
         form = SearchForm(request.POST)
@@ -44,13 +79,11 @@ def index(request):
     
     return render(request, 'index.html', context)
             
+
 def post_event(request):
-    if request.method == 'POST':
-        form = EventForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return redirect('/')  
-    #         return redirect('/')
-    form = EventForm()
+    form = EventForm(request.POST or None)
+    if form.is_valid():
+        form.save()
+        return redirect('/')
     context = {'form': form,}
-    return render(request, 'post_event.html', context) #may have to specify the template name
+    return render(request, 'post_event.html', context)
